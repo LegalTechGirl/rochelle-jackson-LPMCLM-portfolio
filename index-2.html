@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rochelle D. Jackson — Legal Program Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C2B3A;
+    --ink-soft:#253648;
+    --paper:#F4F6F9;
+    --paper-dim:#E8EDF4;
+    --redline:#2E6DA4;
+    --slate:#5C6B7A;
+    --seal:#7BA3C8;
+    --line:rgba(28,43,58,0.12);
+    --line-dark:rgba(244,246,249,0.16);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- focus ---------- */
+  a:focus-visible, button:focus-visible{outline:2px solid var(--redline); outline-offset:3px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 6vw;
+    background:rgba(247,245,239,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+  }
+  nav .brand{font-weight:600; text-transform:uppercase; color:var(--ink);}
+  nav .clauses{display:flex; gap:28px;}
+  nav .clauses a{text-decoration:none; color:var(--slate); text-transform:uppercase;}
+  nav .clauses a:hover{color:var(--redline);}
+  nav .clauses span{color:var(--redline); margin-right:4px;}
+  @media (max-width:780px){ nav .clauses{display:none;} }
+
+  section{padding:140px 6vw 100px; position:relative;}
+  .section-inner{max-width:1080px; margin:0 auto;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--paper);
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:0 6vw;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(110,160,210,0.12) 39px);
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .hero-eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--redline);
+    margin-bottom:22px;
+    opacity:0;
+    animation: rise .7s ease forwards;
+    animation-delay:.1s;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(48px,9vw,118px);
+    line-height:0.98;
+    margin:0 0 28px;
+    max-width:1000px;
+    opacity:0;
+    animation: rise .8s ease forwards;
+    animation-delay:.25s;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:300;
+    color:var(--redline);
+  }
+  .hero p.lede{
+    font-size:clamp(17px,2vw,21px);
+    color:#B0BEC8;
+    max-width:680px;
+    line-height:1.55;
+    margin:0 0 46px;
+    opacity:0;
+    animation: rise .8s ease forwards;
+    animation-delay:.4s;
+  }
+  .hero .meta-row{
+    display:flex; flex-wrap:wrap; gap:34px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:#8FA4B8;
+    border-top:1px solid var(--line-dark);
+    padding-top:24px;
+    opacity:0;
+    animation: rise .8s ease forwards;
+    animation-delay:.55s;
+  }
+  .hero .meta-row b{color:var(--paper); font-weight:500;}
+  @keyframes rise{ from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);} }
+
+  .scroll-cue{
+    position:absolute; bottom:34px; left:6vw;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px; letter-spacing:0.12em; color:#6B8299;
+    display:flex; align-items:center; gap:10px;
+  }
+  .scroll-cue .bar{width:1px; height:34px; background:linear-gradient(var(--redline), transparent); animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{ 0%,100%{opacity:.3;} 50%{opacity:1;} }
+
+  /* ---------- clause label ---------- */
+  .clause-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--redline);
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:20px;
+  }
+  .clause-label::after{content:""; flex:1; height:1px; background:var(--line);}
+
+  h2.title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(32px,4.4vw,54px);
+    line-height:1.05;
+    margin:0 0 30px;
+    max-width:820px;
+  }
+
+  /* reveal-on-scroll */
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- about / whereas ---------- */
+  .whereas{ background:var(--paper); }
+  .whereas p{
+    font-size:clamp(18px,2vw,22px);
+    line-height:1.7;
+    color:var(--ink-soft);
+    max-width:760px;
+    margin:0 0 22px;
+  }
+  .whereas .accent{ color:var(--redline); font-weight:600; }
+
+  /* ---------- expertise ---------- */
+  .expertise{ background:var(--paper-dim); }
+  .exp-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:var(--ink); border:1px solid var(--ink); }
+  @media (max-width:780px){ .exp-grid{grid-template-columns:1fr;} }
+  .exp-card{
+    background:var(--paper); padding:32px 30px; position:relative;
+    transition: background .25s ease;
+  }
+  .exp-card:hover{ background:#fff; }
+  .exp-card .num{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--redline); display:block; margin-bottom:14px; }
+  .exp-card h3{ font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin:0 0 10px; }
+  .exp-card p{ font-size:15px; color:var(--slate); line-height:1.55; margin:0; }
+
+  /* ---------- impact stats with redline strike ---------- */
+  .impact{ background:var(--ink); color:var(--paper); }
+  .impact .clause-label{ color:var(--redline); }
+  .impact .clause-label::after{ background:var(--line-dark); }
+  .stat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--line-dark); }
+  @media (max-width:780px){ .stat-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:480px){ .stat-grid{grid-template-columns:1fr;} }
+  .stat{
+    padding:34px 26px; border-right:1px solid var(--line-dark); border-bottom:1px solid var(--line-dark);
+  }
+  .stat:nth-child(3n){border-right:none;}
+  .stat .figure{
+    font-family:'Fraunces',serif; font-weight:600; font-size:clamp(36px,5vw,52px);
+    position:relative; display:inline-block; color:var(--paper);
+  }
+  .stat .figure .strike{
+    position:absolute; left:-2%; right:-2%; top:50%; height:3px; background:var(--redline);
+    transform:scaleX(0); transform-origin:left; transition:transform .9s cubic-bezier(.4,0,.2,1);
+  }
+  .stat.in .figure .strike{ transform:scaleX(1); }
+  .stat .label{ font-size:14px; color:#8FA8BE; margin-top:12px; line-height:1.5; }
+
+  /* ---------- timeline ---------- */
+  .timeline{ background:var(--paper); }
+  .tl-item{
+    display:grid; grid-template-columns:140px 1fr; gap:28px;
+    padding:26px 0; border-bottom:1px solid var(--line);
+  }
+  .tl-item:first-child{ border-top:1px solid var(--line); }
+  @media (max-width:600px){ .tl-item{grid-template-columns:1fr; gap:6px;} }
+  .tl-dates{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--redline); padding-top:4px; }
+  .tl-role{ font-family:'Fraunces',serif; font-size:21px; font-weight:600; margin:0 0 4px; }
+  .tl-org{ font-size:14px; color:var(--slate); }
+  .tl-extra{ margin-top:18px; font-size:14px; color:var(--slate); line-height:1.7; }
+  .tl-extra b{ color:var(--ink); }
+
+  /* ---------- tools ---------- */
+  .tools{ background:var(--paper-dim); }
+  .tool-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:40px; }
+  @media (max-width:780px){ .tool-cols{grid-template-columns:1fr; gap:30px;} }
+  .tool-cols h4{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--redline); margin:0 0 16px; border-bottom:1px solid var(--line); padding-bottom:10px;
+  }
+  .tool-cols ul{ list-style:none; margin:0; padding:0; }
+  .tool-cols li{ font-size:15px; color:var(--ink-soft); padding:7px 0; border-bottom:1px dotted var(--line); }
+
+  /* ---------- credentials / seals ---------- */
+  .creds{ background:var(--ink); color:var(--paper); }
+  .creds .clause-label{ color:var(--redline); }
+  .creds .clause-label::after{ background:var(--line-dark); }
+  .seal-row{ display:flex; flex-wrap:wrap; gap:22px; margin-top:10px; }
+  .seal{
+    width:148px; height:148px; border-radius:50%;
+    border:2px solid var(--seal);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em;
+    color:var(--seal); padding:14px;
+    position:relative;
+  }
+  .seal::before{
+    content:""; position:absolute; inset:8px; border:1px dashed var(--seal); border-radius:50%; opacity:.5;
+  }
+  .seal b{ display:block; font-family:'Fraunces',serif; font-size:15px; color:var(--paper); margin-bottom:4px; font-weight:600;}
+  .edu-block{ margin-top:54px; max-width:640px; }
+  .edu-block .clause-label{ margin-bottom:16px; }
+  .edu-line{ display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-bottom:1px solid var(--line-dark); font-size:15px; }
+  .edu-line span{ color:#8FAEC8; font-family:'IBM Plex Mono',monospace; font-size:13px; }
+
+  /* ---------- contact / signature ---------- */
+  .signature{ background:var(--paper); text-align:left; }
+  .signature .intro{ font-size:18px; color:var(--slate); max-width:560px; line-height:1.6; margin-bottom:48px; }
+  .sig-block{
+    border-top:2px solid var(--ink); padding-top:28px;
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;
+  }
+  .sig-name{ font-family:'Fraunces',serif; font-style:italic; font-size:clamp(34px,5vw,56px); }
+  .sig-meta{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--slate); line-height:1.8; text-align:right; }
+  .sig-meta a{ text-decoration:none; border-bottom:1px solid var(--redline); color:var(--ink); }
+  footer{ text-align:center; padding:30px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--slate); background:var(--paper);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">R. D. Jackson</div>
+  <div class="clauses">
+    <a href="#whereas"><span>§1</span>About</a>
+    <a href="#expertise"><span>§2</span>Expertise</a>
+    <a href="#impact"><span>§3</span>Impact</a>
+    <a href="#timeline"><span>§4</span>Experience</a>
+    <a href="#creds"><span>§5</span>Credentials</a>
+    <a href="#contact"><span>§6</span>Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <p class="hero-eyebrow">Legal Program Manager &nbsp;/&nbsp; Contract Lifecycle &amp; Compliance</p>
+  <h1>Where contracts,<br>compliance &amp; <em>execution</em><br>meet.</h1>
+  <p class="lede">Sixteen-plus years building the systems that let legal and compliance functions move at the speed of the business — across Big Tech, global law firms, and government — without losing the rigor that protects them.</p>
+  <div class="meta-row">
+    <div><b>16+ yrs</b> cross-sector practice</div>
+    <div><b>$120M+</b> program portfolios directed</div>
+    <div><b>Seattle, WA</b> — open to relocation</div>
+    <div><b>PMP · CSM · LL.M.</b></div>
+  </div>
+  <div class="scroll-cue"><div class="bar"></div>READ ON</div>
+</header>
+
+<section id="whereas" class="whereas">
+  <div class="section-inner">
+    <div class="clause-label reveal">§1 — Recitals</div>
+    <h2 class="title reveal">About Rochelle</h2>
+    <p class="reveal"><span class="accent">WHEREAS</span> contract lifecycle management, legal program management, and global compliance are too often treated as three separate disciplines — I have spent the last sixteen years proving they are one practice, navigated together.</p>
+    <p class="reveal">I've built that practice inside Meta and Amazon, inside global law firms like Wilson Sonsini, K&amp;L Gates, and Hogan Lovells, and inside federal government programs — which means I've seen the same intake, risk, and governance problems from the in-house side, the firm side, and the regulated side. I know which solution travels across all three, and which one only works in just one of them.</p>
+    <p class="reveal">My work is the operational backbone underneath legal teams: the templates, triage logic, approval routing, and dashboards that turn "legal review" from a bottleneck into a system anyone can trust.</p>
+  </div>
+</section>
+
+<section id="expertise" class="expertise">
+  <div class="section-inner">
+    <div class="clause-label reveal">§2 — Terms of Engagement</div>
+    <h2 class="title reveal">Core Expertise</h2>
+  </div>
+  <div class="exp-grid reveal" style="margin-top:10px;">
+    <div class="exp-card">
+      <span class="num mono">2.1</span>
+      <h3>Contract Lifecycle Management</h3>
+      <p>Intake &amp; triage design, templates, approval routing, e-signature, archive, and post-signature obligation tracking across high-volume vendor and client contracting.</p>
+    </div>
+    <div class="exp-card">
+      <span class="num mono">2.2</span>
+      <h3>Legal Program Management</h3>
+      <p>Multi-year, cross-functional programs from business case through delivery — scope, budget, milestones, and dependencies across regulated, global organizations.</p>
+    </div>
+    <div class="exp-card">
+      <span class="num mono">2.3</span>
+      <h3>Global Compliance &amp; Risk</h3>
+      <p>EPMO governance frameworks, policy adherence, and risk identification, measurement, and control across complex contractual and regulatory matters.</p>
+    </div>
+    <div class="exp-card">
+      <span class="num mono">2.4</span>
+      <h3>Stakeholder Influence</h3>
+      <p>Alignment across C-suite, Legal, Engineering, Finance, and Operations — without formal authority — through executive communication and narrative-building.</p>
+    </div>
+    <div class="exp-card">
+      <span class="num mono">2.5</span>
+      <h3>Process &amp; Technology</h3>
+      <p>AI/LLM tooling (Claude, ChatGPT, Copilot) and legal-ops platforms deployed to scale throughput, reduce manual handling, and improve cycle time.</p>
+    </div>
+    <div class="exp-card">
+      <span class="num mono">2.6</span>
+      <h3>Cross-Sector Translation</h3>
+      <p>Fluent in how the same governance problem shows up — and gets solved differently — inside Big Tech, global law firms, and federal government.</p>
+    </div>
+  </div>
+</section>
+
+<section id="impact" class="impact">
+  <div class="section-inner">
+    <div class="clause-label reveal">§3 — Consideration</div>
+    <h2 class="title reveal">Selected Impact</h2>
+  </div>
+  <div class="stat-grid">
+    <div class="stat reveal"><div class="figure">$120M<span class="strike"></span>+</div><div class="label">Federal program portfolio directed across full lifecycle delivery — planning, budgeting, risk control, change management.</div></div>
+    <div class="stat reveal"><div class="figure">$46M<span class="strike"></span></div><div class="label">Contract &amp; program portfolio managed across major law firms under EPMO governance rigor.</div></div>
+    <div class="stat reveal"><div class="figure">10+<span class="strike"></span></div><div class="label">Global lines of business aligned through cross-functional programs at Meta.</div></div>
+    <div class="stat reveal"><div class="figure">30%<span class="strike"></span></div><div class="label">Reduction in delivery delays through structured governance rigor and process enforcement.</div></div>
+    <div class="stat reveal"><div class="figure">66%<span class="strike"></span></div><div class="label">Reduction in operational cycle time through systematic process redesign.</div></div>
+    <div class="stat reveal"><div class="figure">25%<span class="strike"></span></div><div class="label">Improvement in operational efficiency via scalable SOPs and workflow design.</div></div>
+  </div>
+</section>
+
+<section id="timeline" class="timeline">
+  <div class="section-inner">
+    <div class="clause-label reveal">§4 — Term &amp; Performance</div>
+    <h2 class="title reveal">Experience</h2>
+
+    <div class="tl-item reveal">
+      <div class="tl-dates">2026 — Present</div>
+      <div><div class="tl-role">Contract Claims Specialist</div><div class="tl-org">LHH at Epiq Global Consulting</div></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dates">2025 — 2026</div>
+      <div><div class="tl-role">Program Manager, Legal Technology &amp; Integrations</div><div class="tl-org">Allegis Consulting at Amazon</div></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dates">2022 — 2025</div>
+      <div><div class="tl-role">Senior Program Manager, Technical Operations</div><div class="tl-org">Meta</div></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dates">2021 — 2022</div>
+      <div><div class="tl-role">Program Manager, FinTech</div><div class="tl-org">Wilson Sonsini Goodrich &amp; Rosati</div></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dates">2019 — 2021</div>
+      <div><div class="tl-role">Legal Project Manager</div><div class="tl-org">K&amp;L Gates LLP</div></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dates">2018 — 2019</div>
+      <div><div class="tl-role">Senior Project Manager</div><div class="tl-org">Hogan Lovells</div></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dates">2006 — 2018</div>
+      <div><div class="tl-role">Legal Operations Lead &amp; Senior Attorney</div><div class="tl-org">Serco NA</div></div>
+    </div>
+
+    <div class="tl-extra reveal"><b>Additional roles:</b> Program Director (Linux Foundation) · VP Program Management (PMI Washington DC) · Attorney Case Manager (White &amp; Case LLP) · IP Attorney (Bureau of National Affairs)</div>
+  </div>
+</section>
+
+<section class="tools">
+  <div class="section-inner">
+    <div class="clause-label reveal">§4.1 — Instruments of Record</div>
+    <h2 class="title reveal">Methods &amp; Tools</h2>
+    <div class="tool-cols reveal">
+      <div>
+        <h4>Methodologies</h4>
+        <ul>
+          <li>EPMO Governance</li>
+          <li>Waterfall &amp; Agile / Scrum</li>
+          <li>Change Management</li>
+          <li>Six Sigma</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Platforms</h4>
+        <ul>
+          <li>Legal Tracker · DocuSign CLM</li>
+          <li>ServiceNow · Smartsheet</li>
+          <li>Asana · MS Project · SharePoint</li>
+          <li>Westlaw · LexisNexis</li>
+        </ul>
+      </div>
+      <div>
+        <h4>AI / LLM Tooling</h4>
+        <ul>
+          <li>Claude</li>
+          <li>ChatGPT</li>
+          <li>Microsoft Copilot</li>
+          <li>Applied to triage &amp; throughput</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="creds" class="creds">
+  <div class="section-inner">
+    <div class="clause-label reveal">§5 — Warranties</div>
+    <h2 class="title reveal">Credentials</h2>
+    <div class="seal-row reveal">
+      <div class="seal"><div><b>PMP</b>Project Management Professional</div></div>
+      <div class="seal"><div><b>CSM</b>Certified Scrum Master</div></div>
+      <div class="seal"><div><b>Six Sigma</b>Yellow Belt</div></div>
+      <div class="seal"><div><b>NY Bar</b>Active Member</div></div>
+      <div class="seal"><div><b>WA Bar</b>Pending</div></div>
+    </div>
+
+    <div class="edu-block reveal">
+      <div class="clause-label">§5.1 — Education</div>
+      <div class="edu-line"><div>LL.M., International Business Law</div><span>Georgetown University Law Center</span></div>
+      <div class="edu-line"><div>Juris Doctor</div><span>Univ. at Buffalo School of Law &amp; Universiteit van Amsterdam</span></div>
+      <div class="edu-line"><div>B.A.</div><span>SUNY Buffalo</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="signature">
+  <div class="section-inner">
+    <div class="clause-label reveal">§6 — Execution</div>
+    <h2 class="title reveal">Let's Talk</h2>
+    <p class="intro reveal">Currently exploring Legal Program Manager and Legal Operations roles where contract lifecycle management, compliance, and cross-functional governance intersect.</p>
+    <div class="sig-block reveal">
+      <div class="sig-name">Rochelle D. Jackson</div>
+      <div class="sig-meta">
+        <div><a href="mailto:rochellejackson@ymail.com">rochellejackson@ymail.com</a></div>
+        <div>(202) 251-1985</div>
+        <div>Seattle, WA — open to relocation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>&copy; <span id="yr"></span> Rochelle D. Jackson. Built with intent.</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const items = document.querySelectorAll('.reveal');
+  const stats = document.querySelectorAll('.stat');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.15});
+  items.forEach(el=>io.observe(el));
+  stats.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
